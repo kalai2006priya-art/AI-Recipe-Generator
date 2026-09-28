@@ -1,0 +1,75 @@
+# ==========================================
+# Environment Variables & Secrets
+# ==========================================
+.env
+.env.local
+.env.*.local
+*.env
+!.env.example
+*.pem
+*.key
+
+# ==========================================
+# Python Bytecode & Cache
+# ==========================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ==========================================
+# Virtual Environments
+# ==========================================
+.venv/
+venv/
+ENV/
+env/
+env*/
+virtualenv/
+
+# ==========================================
+# Streamlit & Web Cache
+# ==========================================
+.streamlit/
+.streamlit/secrets.toml
+
+# ==========================================
+# User Database & Local State
+# ==========================================
+data/users.db
+*.db
+*.sqlite
+*.sqlite3
+
+# ==========================================
+# Large Raw Scraped Datasets (>25MB not used by app)
+# ==========================================
+data/*_raw.csv
+data/original_recipes.csv
+data/processed_recipes.csv
+
+# ==========================================
+# Generated Media & Temp Files
+# ==========================================
+*.mp4
+*.mp3
+*.wav
+temp/
+tmp/
+*.tmp
+*.log
+
+# ==========================================
+# Operating System & IDE Files
+# ==========================================
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
+*.swo
+

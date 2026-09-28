@@ -1,0 +1,580 @@
+"""
+create_tamilnadu_dataset.py
+---------------------------
+Creates the comprehensive bilingual Tamil Nadu traditional recipes database
+covering all 5 meal categories:
+1. Breakfast (காலை உணவு)
+2. Lunch (மதிய உணவு)
+3. Snacks (மாலை சிற்றுண்டி)
+4. Sweets (இனிப்பு வகைகள்)
+5. Dinner (இரவு உணவு)
+
+Each recipe contains:
+- name_en & name_ta
+- category (Breakfast, Lunch, Snacks, Sweets, Dinner)
+- diet (Vegetarian, Non-Vegetarian)
+- ingredients_en & ingredients_ta
+- cleaned_ingredients_en & cleaned_ingredients_ta
+- instructions_en & instructions_ta
+- time_mins & difficulty
+"""
+
+import json
+import os
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_DIR = os.path.join(BASE_DIR, "data")
+OUTPUT_PATH = os.path.join(DATA_DIR, "tamilnadu_recipes.json")
+
+RECIPES = [
+    # ========================================================
+    # 1. BREAKFAST (காலை உணவு)
+    # ========================================================
+    {
+        "id": "tn_b1",
+        "name_en": "Soft Malligai Poo Idli",
+        "name_ta": "மல்லிகைப் பூ இட்லி",
+        "category": "Breakfast",
+        "diet": "Vegetarian",
+        "time_mins": 20,
+        "difficulty": "Easy",
+        "cleaned_ingredients_en": ["idli rice", "urad dal", "fenugreek", "salt", "water"],
+        "cleaned_ingredients_ta": ["இட்லி அரிசி", "உளுத்தம் பருப்பு", "வெந்தயம்", "உப்பு", "தண்ணீர்"],
+        "ingredients_en": "- 4 cups Idli Rice\n- 1 cup Whole White Urad Dal\n- 1/2 tsp Fenugreek Seeds (Methi)\n- Salt to taste\n- Water for grinding",
+        "ingredients_ta": "- 4 கப் இட்லி அரிசி\n- 1 கப் முழு வெள்ளை உளுத்தம் பருப்பு\n- 1/2 தேக்கரண்டி வெந்தயம்\n- தேவையான அளவு உப்பு\n- அரைக்க தேவையான தண்ணீர்",
+        "instructions_en": "1. Soak idli rice and urad dal with fenugreek seeds in separate bowls for 5 hours.\n2. Grind urad dal until extremely fluffy and soft. Grind rice to a smooth, slight rava texture.\n3. Mix both batters together with salt and ferment overnight for 8 hours.\n4. Grease idli plates, pour batter, and steam for 10-12 minutes on high flame.\n5. Serve hot and fluffy with Coconut Chutney and Murungakkai Sambar!",
+        "instructions_ta": "1. இட்லி அரிசியையும், உளுந்துடன் வெந்தயத்தையும் தனித்தனி பாத்திரங்களில் 5 மணி நேரம் ஊறவைக்கவும்.\n2. உளுந்தை பஞ்சு போல மிருதுவாகவும், அரிசியை லேசான ரவை பதத்திலும் அரைக்கவும்.\n3. இரண்டையும் உப்பு சேர்த்து நன்றாகக் கலந்து 8 மணி நேரம் புளிக்க வைக்கவும்.\n4. இட்லி தட்டில் எண்ணெய் தடவி, மாவை ஊற்றி 10-12 நிமிடங்கள் ஆவியில் வேகவைக்கவும்.\n5. சுடச்சுட தேங்காய் சட்னி மற்றும் முருங்கைக்காய் சாம்பாருடன் பரிமாறவும்!"
+    },
+    {
+        "id": "tn_b2",
+        "name_en": "Crispy Golden Plain Dosa",
+        "name_ta": "மொறுமொறு நெய் தோசை",
+        "category": "Breakfast",
+        "diet": "Vegetarian",
+        "time_mins": 15,
+        "difficulty": "Easy",
+        "cleaned_ingredients_en": ["dosa rice", "urad dal", "fenugreek", "ghee", "salt"],
+        "cleaned_ingredients_ta": ["தோசை அரிசி", "உளுத்தம் பருப்பு", "வெந்தயம்", "நெய்", "உப்பு"],
+        "ingredients_en": "- 3 cups Parboiled Dosa Rice\n- 1 cup Whole Urad Dal\n- 1/2 tsp Fenugreek Seeds\n- Ghee or Sesame Oil for roasting\n- Salt to taste",
+        "ingredients_ta": "- 3 கப் புழுங்கல் தோசை அரிசி\n- 1 கப் முழு உளுத்தம் பருப்பு\n- 1/2 தேக்கரண்டி வெந்தயம்\n- சுட தேவையான நெய் அல்லது நல்லெண்ணெய்\n- தேவையான அளவு உப்பு",
+        "instructions_en": "1. Soak rice and dal separately for 4 hours; grind to a smooth dosa batter and ferment for 8 hours.\n2. Heat a flat iron tawa. Pour a ladle of batter in the center and spread in outward spirals.\n3. Drizzle pure ghee around edges and roast until golden brown and crispy.\n4. Fold and serve hot with Tomato Chutney and Sambar!",
+        "instructions_ta": "1. அரிசி மற்றும் உளுந்தை 4 மணி நேரம் ஊறவைத்து, நைசாக அரைத்து 8 மணி நேரம் புளிக்க வைக்கவும்.\n2. தோசைக் கல்லை சூடாக்கி, நடுவில் மாவு ஊற்றி வட்டமாக மெலிதாகத் தேய்க்கவும்.\n3. ஓரங்களில் நெய் ஊற்றி பொன்னிறமாகவும் மொறுமொறுப்பாகவும் வேகவிடவும்.\n4. திருப்பிப் போட்டு மடித்து தக்காளி சட்னி மற்றும் சாம்பாருடன் பரிமாறவும்!"
+    },
+    {
+        "id": "tn_b3",
+        "name_en": "Traditional South Indian Ven Pongal",
+        "name_ta": "சுவையான நெய் வெண் பொங்கல்",
+        "category": "Breakfast",
+        "diet": "Vegetarian",
+        "time_mins": 25,
+        "difficulty": "Easy",
+        "cleaned_ingredients_en": ["raw rice", "moong dal", "pepper", "cumin", "ginger", "cashew", "curry leaf", "asafoetida", "ghee", "salt"],
+        "cleaned_ingredients_ta": ["பச்சரிசி", "பாசிப்பருப்பு", "மிளகு", "சீரகம்", "இஞ்சி", "முந்திரி", "கருவேப்பிலை", "பெருங்காயம்", "நெய்", "உப்பு"],
+        "ingredients_en": "- 1 cup Raw Rice (Pacharisi)\n- 1/2 cup Yellow Moong Dal (Paasi Paruppu)\n- 1 tsp Black Peppercorns\n- 1 tsp Cumin Seeds (Jeera)\n- 1 inch Ginger (finely chopped)\n- 10 Cashews\n- 1 sprig Curry Leaves\n- 1/4 tsp Asafoetida (Hing)\n- 3-4 tbsp pure Ghee\n- Salt to taste",
+        "ingredients_ta": "- 1 கப் பச்சரிசி\n- 1/2 கப் பாசிப்பருப்பு\n- 1 தேக்கரண்டி மிளகு\n- 1 தேக்கரண்டி சீரகம்\n- 1 துண்டு நறுக்கிய இஞ்சி\n- 10 முந்திரி பருப்பு\n- 1 கொத்து கருவேப்பிலை\n- 1/4 தேக்கரண்டி பெருங்காயத்தூள்\n- 3-4 மேஜைக்கரண்டி சுத்தமான நெய்\n- தேவையான அளவு உப்பு",
+        "instructions_en": "1. Lightly roast moong dal until fragrant. Wash rice and dal together.\n2. Pressure cook with 4.5 cups water and salt for 4 whistles until very soft and mushy.\n3. In a pan, heat ghee. Fry cashews until golden and set aside.\n4. In the same ghee, crackle cumin, black pepper, ginger, asafoetida, and curry leaves.\n5. Pour the aromatic tempering and cashews over the hot mashed pongal, mix thoroughly, and serve with Coconut Chutney and Medu Vada!",
+        "instructions_ta": "1. பாசிப்பருப்பை வாசம் வரும் வரை வறுத்து, அரிசியுடன் சேர்த்து கழுவவும்.\n2. குக்கரில் 4.5 கப் தண்ணீர், உப்பு சேர்த்து 4 விசில் விட்டு குழைய வேகவைக்கவும்.\n3. ஒரு கடாயில் நெய் ஊற்றி, முந்திரியை வறுத்து தனியாக எடுத்து வைக்கவும்.\n4. அதே நெய்யில் மிளகு, சீரகம், இஞ்சி, பெருங்காயம், கருவேப்பிலை சேர்த்து தாளிக்கவும்.\n5. தாளித்த நெய் மற்றும் முந்திரியை பொங்கலில் கொட்டி நன்றாகக் கிளறி, தேங்காய் சட்னி மற்றும் மெது வடையுடன் பரிமாறவும்!"
+    },
+    {
+        "id": "tn_b4",
+        "name_en": "Crispy Medu Vada (Ulundu Vadai)",
+        "name_ta": "மொறுமொறு மெது வடை",
+        "category": "Breakfast",
+        "diet": "Vegetarian",
+        "time_mins": 25,
+        "difficulty": "Medium",
+        "cleaned_ingredients_en": ["urad dal", "onion", "green chilli", "ginger", "pepper", "curry leaf", "asafoetida", "salt", "oil"],
+        "cleaned_ingredients_ta": ["உளுத்தம் பருப்பு", "வெங்காயம்", "பச்சை மிளகாய்", "இஞ்சி", "மிளகு", "கருவேப்பிலை", "பெருங்காயம்", "உப்பு", "எண்ணெய்"],
+        "ingredients_en": "- 1 cup Whole White Urad Dal\n- 1 small Onion (finely chopped)\n- 2 Green Chillies (chopped)\n- 1 inch Ginger (minced)\n- 1 tsp Crushed Black Pepper\n- 1 sprig Curry Leaves\n- 1/4 tsp Asafoetida\n- Salt to taste\n- Oil for deep frying",
+        "ingredients_ta": "- 1 கப் முழு வெள்ளை உளுத்தம் பருப்பு\n- 1 பொடியாக நறுக்கிய வெங்காயம்\n- 2 பச்சை மிளகாய்\n- 1 துண்டு நறுக்கிய இஞ்சி\n- 1 தேக்கரண்டி இடித்த மிளகு\n- 1 கொத்து கருவேப்பிலை\n- 1/4 தேக்கரண்டி பெருங்காயம்\n- தேவையான அளவு உப்பு\n- பொரிக்க தேவையான எண்ணெய்",
+        "instructions_en": "1. Soak urad dal for 2 hours. Drain completely and grind with minimal ice water into a thick, airy batter.\n2. Mix in chopped onion, green chillies, ginger, pepper, curry leaves, asafoetida, and salt.\n3. Wet your fingers, take a ball of batter, flatten, make a hole in the center, and slide into hot oil.\n4. Fry on medium flame until golden brown and super crispy. Serve hot with Sambar and Chutney!",
+        "instructions_ta": "1. உளுந்தை 2 மணி நேரம் ஊறவைத்து, தண்ணீர் தெளித்து கெட்டியாகவும் பஞ்சு போலவும் அரைக்கவும்.\n2. மாவில் வெங்காயம், பச்சை மிளகாய், இஞ்சி, மிளகு, கருவேப்பிலை, பெருங்காயம், உப்பு சேர்த்து கலக்கவும்.\n3. கையில் தண்ணீர் தொட்டு, மாவை உருட்டி நடுவில் துளையிட்டு சூடான எண்ணெயில் போடவும்.\n4. மிதமான தீயில் இருபுறமும் பொன்னிறமாக பொரித்தெடுத்து சாம்பார் மற்றும் சட்னியுடன் சுவைக்கவும்!"
+    },
+    {
+        "id": "tn_b5",
+        "name_en": "Chettinad Aappam with Sweet Coconut Milk",
+        "name_ta": "செட்டிநாடு ஆப்பம் தேங்காய்ப்பால்",
+        "category": "Breakfast",
+        "diet": "Vegetarian",
+        "time_mins": 20,
+        "difficulty": "Medium",
+        "cleaned_ingredients_en": ["raw rice", "urad dal", "coconut", "cardamom", "jaggery", "salt", "yeast"],
+        "cleaned_ingredients_ta": ["பச்சரிசி", "உளுத்தம் பருப்பு", "தேங்காய்", "ஏலக்காய்", "நாட்டு சர்க்கரை", "உப்பு"],
+        "ingredients_en": "- 2 cups Raw Rice\n- 2 tbsp Urad Dal\n- 1/2 cup grated fresh Coconut\n- 1 cup thick Coconut Milk\n- 3 tbsp Jaggery or Cane Sugar\n- 1/2 tsp Cardamom Powder\n- A pinch of Salt",
+        "ingredients_ta": "- 2 கப் பச்சரிசி\n- 2 மேஜைக்கரண்டி உளுந்து\n- 1/2 கப் துருவிய தேங்காய்\n- 1 கப் கெட்டி தேங்காய்ப்பால்\n- 3 மேஜைக்கரண்டி நாட்டு சர்க்கரை\n- 1/2 தேக்கரண்டி ஏலக்காய்த்தூள்\n- ஒரு சிட்டிகை உப்பு",
+        "instructions_en": "1. Soak rice and urad dal for 4 hours; grind with grated coconut to a smooth, flowing batter and ferment for 8 hours.\n2. Heat an appam kadai, pour a ladle of batter, swirl the pan to coat sides, cover with lid, and cook until edges are lacy and center is soft.\n3. Prepare sweet coconut milk mixed with jaggery and cardamom powder.\n4. Pour sweet coconut milk over hot appams and relish!",
+        "instructions_ta": "1. அரிசி, உளுந்தை ஊறவைத்து தேங்காய் சேர்த்து நைசாக அரைத்து 8 மணி நேரம் புளிக்க வைக்கவும்.\n2. ஆப்பச் சட்டியில் மாவை ஊற்றி சுழற்றி, மூடி போட்டு ஓரங்கள் மொறுமொறுப்பாகவும் நடுவில் மென்மையாகவும் சுடவும்.\n3. தேங்காய்ப்பாலில் நாட்டு சர்க்கரை, ஏலக்காய்த்தூள் கலந்து பரிமாறும் கிண்ணத்தில் வைக்கவும்.\n4. சுடச்சுட ஆப்பத்தின் மேல் தேங்காய்ப்பால் ஊற்றி ருசிக்கவும்!"
+    },
+    {
+        "id": "tn_b6",
+        "name_en": "Poori with South Indian Potato Masala (Kilangu)",
+        "name_ta": "பூரி கிழங்கு மசாலா",
+        "category": "Breakfast",
+        "diet": "Vegetarian",
+        "time_mins": 25,
+        "difficulty": "Easy",
+        "cleaned_ingredients_en": ["wheat flour", "potato", "onion", "green chilli", "ginger", "turmeric", "mustard", "curry leaf", "oil", "salt"],
+        "cleaned_ingredients_ta": ["கோதுமை மாவு", "உருளைக்கிழங்கு", "வெங்காயம்", "பச்சை மிளகாய்", "இஞ்சி", "மஞ்சள்தூள்", "கடுகு", "கருவேப்பிலை", "எண்ணெய்", "உப்பு"],
+        "ingredients_en": "- 2 cups Whole Wheat Flour\n- 3 medium Potatoes (boiled and mashed)\n- 1 large Onion (thinly sliced)\n- 3 Green Chillies (slit)\n- 1 inch Ginger (chopped)\n- 1/2 tsp Turmeric Powder\n- 1 tsp Mustard Seeds & Chana Dal\n- 1 sprig Curry Leaves\n- Salt and Oil",
+        "ingredients_ta": "- 2 கப் கோதுமை மாவு\n- 3 வேகவைத்து மசித்த உருளைக்கிழங்கு\n- 1 நீளமாக நறுக்கிய வெங்காயம்\n- 3 பச்சை மிளகாய்\n- 1 துண்டு இஞ்சி\n- 1/2 தேக்கரண்டி மஞ்சள்தூள்\n- 1 தேக்கரண்டி கடுகு, கடலைப்பருப்பு\n- 1 கொத்து கருவேப்பிலை\n- உப்பு மற்றும் எண்ணெய்",
+        "instructions_en": "1. Knead wheat flour with water and salt into a stiff dough; roll into small discs and deep fry in hot oil until puffed and golden.\n2. In a pan, heat oil, crackle mustard, chana dal, curry leaves, onions, green chillies, and ginger until onions soften.\n3. Add turmeric powder, salt, mashed potatoes, and 1 cup water; simmer for 5 minutes to form a thick, luscious potato masala.\n4. Serve hot puffed pooris with flavorful potato masala!",
+        "instructions_ta": "1. கோதுமை மாவை பிசைந்து சிறிய வட்டங்களாகத் தேய்த்து, சூடான எண்ணெயில் போட்டு உப்பலாகப் பொரித்தெடுக்கவும்.\n2. கடாயில் எண்ணெய் ஊற்றி கடுகு, கடலைப்பருப்பு, கருவேப்பிலை, வெங்காயம், பச்சை மிளகாய், இஞ்சி சேர்த்து வதக்கவும்.\n3. மஞ்சள்தூள், உப்பு, மசித்த உருளைக்கிழங்கு, 1 கப் தண்ணீர் ஊற்றி 5 நிமிடங்கள் கொதிக்கவிடவும்.\n4. சூடான உப்பிய பூரியுடன் மணமணக்கும் கிழங்கு மசாலாவை வைத்துப் பரிமாறவும்!"
+    },
+
+    # ========================================================
+    # 2. LUNCH (மதிய உணவு)
+    # ========================================================
+    {
+        "id": "tn_l1",
+        "name_en": "Authentic Murungakkai Sambar (Drumstick Sambar)",
+        "name_ta": "முருங்கைக்காய் சாம்பார்",
+        "category": "Lunch",
+        "diet": "Vegetarian",
+        "time_mins": 30,
+        "difficulty": "Easy",
+        "cleaned_ingredients_en": ["toor dal", "drumstick", "tomato", "shallot", "tamarind", "sambar powder", "turmeric", "mustard", "curry leaf", "coriander", "asafoetida", "salt", "ghee"],
+        "cleaned_ingredients_ta": ["துவரம் பருப்பு", "முருங்கைக்காய்", "தக்காளி", "சின்ன வெங்காயம்", "புளி", "சாம்பார் பொடி", "மஞ்சள்தூள்", "கடுகு", "கருவேப்பிலை", "கொத்தமல்லி", "பெருங்காயம்", "உப்பு", "நெய்"],
+        "ingredients_en": "- 1 cup Toor Dal (Tuvaram Paruppu)\n- 2 Drumsticks (cut into pieces)\n- 10 Small Onions (Shallots)\n- 2 ripe Tomatoes\n- 1 lemon-sized Tamarind (extracted)\n- 2.5 tbsp Sambar Powder\n- 1/2 tsp Turmeric Powder\n- 1 tsp Mustard Seeds\n- 1 sprig Curry Leaves\n- 1/4 tsp Hing\n- 1 tbsp Ghee / Oil\n- Salt and Coriander",
+        "ingredients_ta": "- 1 கப் துவரம் பருப்பு\n- 2 முருங்கைக்காய் (துண்டுகளாக்கியது)\n- 10 சின்ன வெங்காயம்\n- 2 தக்காளி\n- 1 எலுமிச்சை அளவு புளி சாறு\n- 2.5 மேஜைக்கரண்டி சாம்பார் தூள்\n- 1/2 தேக்கரண்டி மஞ்சள்தூள்\n- 1 தேக்கரண்டி கடுகு\n- 1 கொத்து கருவேப்பிலை\n- 1/4 தேக்கரண்டி பெருங்காயத்தூள்\n- 1 மேஜைக்கரண்டி நெய்/எண்ணெய்\n- உப்பு, கொத்தமல்லி",
+        "instructions_en": "1. Pressure cook toor dal with turmeric until mushy and mash smoothly.\n2. In a pot, boil drumstick pieces, shallots, and tomatoes in tamarind water with sambar powder and salt until drumsticks are tender.\n3. Pour the mashed dal into the pot and simmer for 5-6 minutes on medium flame.\n4. Temper mustard seeds, curry leaves, and asafoetida in ghee, pour into sambar, and garnish with fresh coriander.\n5. Serve piping hot with steamed ponni rice and spicy potato roast!",
+        "instructions_ta": "1. துவரம் பருப்பை மஞ்சள்தூள் சேர்த்து குக்கரில் குழைய வேகவைத்து மசிக்கவும்.\n2. பாத்திரத்தில் முருங்கைக்காய், சின்ன வெங்காயம், தக்காளி சேர்த்து புளித்தண்ணீர், சாம்பார் பொடி, உப்பு போட்டு காய் வேகும் வரை கொதிக்கவிடவும்.\n3. வெந்த பருப்பை ஊற்றி 5-6 நிமிடங்கள் மிதமான தீயில் கொதிக்கவிடவும்.\n4. நெய்யில் கடுகு, கருவேப்பிலை, பெருங்காயம் தாளித்துக் கொட்டி, கொத்தமல்லி தூவி இறக்கவும்.\n5. சூடான பொன்னி அரிசி சாதம் மற்றும் உருளைக்கிழங்கு வறுவலுடன் பரிமாறவும்!"
+    },
+    {
+        "id": "tn_l2",
+        "name_en": "Traditional Thakkali Milagu Rasam (Tomato Pepper Rasam)",
+        "name_ta": "தக்காளி மிளகு ரசம்",
+        "category": "Lunch",
+        "diet": "Vegetarian",
+        "time_mins": 15,
+        "difficulty": "Easy",
+        "cleaned_ingredients_en": ["tomato", "black pepper", "cumin", "garlic", "tamarind", "mustard", "curry leaf", "coriander", "turmeric", "asafoetida", "salt", "ghee"],
+        "cleaned_ingredients_ta": ["தக்காளி", "மிளகு", "சீரகம்", "பூண்டு", "புளி", "கடுகு", "கருவேப்பிலை", "கொத்தமல்லி", "மஞ்சள்தூள்", "பெருங்காயம்", "உப்பு", "நெய்"],
+        "ingredients_en": "- 3 ripe country Tomatoes (hand crushed)\n- 1.5 tsp Black Peppercorns\n- 1 tsp Cumin Seeds\n- 6 cloves Garlic (crushed)\n- 1 small Tamarind piece (soaked in 1 cup water)\n- 1/2 tsp Turmeric\n- 1 tsp Mustard Seeds\n- 1 sprig Curry Leaves\n- 1 tbsp fresh Coriander\n- 1/4 tsp Asafoetida\n- 1 tsp Ghee\n- Salt to taste",
+        "ingredients_ta": "- 3 நாட்டு தக்காளி (கையால் பிசைந்தது)\n- 1.5 தேக்கரண்டி மிளகு\n- 1 தேக்கரண்டி சீரகம்\n- 6 பல் பூண்டு (தட்டியது)\n- 1 சிறிய புளி துண்டு சாறு\n- 1/2 தேக்கரண்டி மஞ்சள்தூள்\n- 1 தேக்கரண்டி கடுகு\n- 1 கொத்து கருவேப்பிலை\n- 1 மேஜைக்கரண்டி கொத்தமல்லி\n- 1/4 தேக்கரண்டி பெருங்காயம்\n- 1 தேக்கரண்டி நெய், உப்பு",
+        "instructions_en": "1. Coarsely crush black pepper, cumin seeds, and garlic.\n2. In a pot, boil crushed tomatoes with tamarind water, turmeric, salt, and asafoetida for 6 minutes.\n3. Add crushed pepper-cumin-garlic paste and 1.5 cups water; simmer gently until a frothy foam forms on top (do not let it rolling boil!).\n4. Heat ghee, crackle mustard seeds and curry leaves, pour over rasam, top with coriander, and cover immediately with a lid.\n5. Enjoy as hot comforting soup or mix with hot rice!",
+        "instructions_ta": "1. மிளகு, சீரகம், பூண்டினை உரலில் ஒன்றிரண்டாக இடித்துக்கொள்ளவும்.\n2. பாத்திரத்தில் பிசைந்த தக்காளி, புளித்தண்ணீர், மஞ்சள்தூள், பெருங்காயம், உப்பு சேர்த்து 6 நிமிடங்கள் பச்சை வாசம் போக கொதிக்கவிடவும்.\n3. இடித்த மிளகு-சீரக-பூண்டு விழுது மற்றும் தண்ணீர் சேர்த்து நுரைத்து வரும் வரை வைக்கவும் (கொதிக்கவிடக் கூடாது!).\n4. நெய்யில் கடுகு, கருவேப்பிலை தாளித்துக் கொட்டி, கொத்தமல்லி தழை தூவி உடனே மூடி வைக்கவும்.\n5. சூடான சாதத்தில் ஊற்றி பிசைந்து சாப்பிட அமுதமாக இருக்கும்!"
+    },
+    {
+        "id": "tn_l3",
+        "name_en": "Chettinad Poondu Vatha Kulambu",
+        "name_ta": "செட்டிநாடு பூண்டு வத்தக் குழம்பு",
+        "category": "Lunch",
+        "diet": "Vegetarian",
+        "time_mins": 25,
+        "difficulty": "Easy",
+        "cleaned_ingredients_en": ["garlic", "shallot", "sundakkai vathal", "tamarind", "sambar powder", "sesame oil", "mustard", "fenugreek", "curry leaf", "turmeric", "salt"],
+        "cleaned_ingredients_ta": ["பூண்டு", "சின்ன வெங்காயம்", "சுண்டைக்காய் வத்தல்", "புளி", "சாம்பார் பொடி", "நல்லெண்ணெய்", "கடுகு", "வெந்தயம்", "கருவேப்பிலை", "மஞ்சள்தூள்", "உப்பு"],
+        "ingredients_en": "- 20 cloves Garlic (peeled)\n- 15 Small Onions (Shallots)\n- 2 tbsp Sundakkai Vathal (Turkey Berry)\n- 1 big lemon-sized Tamarind\n- 2 tbsp Sambar Powder or Kulambu Podi\n- 3 tbsp pure Sesame Oil (Gingelly Oil)\n- 1 tsp Mustard Seeds\n- 1/2 tsp Fenugreek Seeds (Methi)\n- 1 sprig Curry Leaves\n- Salt to taste",
+        "ingredients_ta": "- 20 பல் பூண்டு\n- 15 சின்ன வெங்காயம்\n- 2 மேஜைக்கரண்டி சுண்டைக்காய் வத்தல்\n- 1 பெரிய எலுமிச்சை அளவு புளி சாறு\n- 2 மேஜைக்கரண்டி சாம்பார்/குழம்பு தூள்\n- 3 மேஜைக்கரண்டி நல்லெண்ணெய்\n- 1 தேக்கரண்டி கடுகு\n- 1/2 தேக்கரண்டி வெந்தயம்\n- 1 கொத்து கருவேப்பிலை, உப்பு",
+        "instructions_en": "1. In a heavy clay pot or pan, heat sesame oil; fry sundakkai vathal until crispy and take out.\n2. In same oil, crackle mustard, fenugreek, and curry leaves. Add whole garlic cloves and shallots; sauté until golden.\n3. Add sambar powder, turmeric, and thick tamarind extract with 1.5 cups water and salt.\n4. Simmer on medium-low flame for 12-15 minutes until oil separates and floats on top.\n5. Add the fried vathal, simmer for 2 more minutes, and turn off flame. Tastes heavenly with appalam and hot rice!",
+        "instructions_ta": "1. மண் சட்டியில் நல்லெண்ணெய் ஊற்றி சுண்டைக்காய் வத்தலை வறுத்து தனியாக எடுக்கவும்.\n2. அதே எண்ணெயில் கடுகு, வெந்தயம், கருவேப்பிலை தாளித்து, பூண்டு மற்றும் சின்ன வெங்காயம் சேர்த்து பொன்னிறமாக வதக்கவும்.\n3. சாம்பார் தூள், மஞ்சள்தூள், கெட்டியான புளித்தண்ணீர், உப்பு சேர்த்து நன்றாகக் கலக்கவும்.\n4. மிதமான தீயில் 12-15 நிமிடங்கள் எண்ணெய் பிரிந்து மேலே வரும் வரை கொதிக்கவிடவும்.\n5. வறுத்த சுண்டைக்காய் வத்தலை சேர்த்து 2 நிமிடம் கழித்து இறக்கவும். சுடச்சுட சாதம், அப்பளத்துடன் அருமையாக இருக்கும்!"
+    },
+    {
+        "id": "tn_l4",
+        "name_en": "Ennai Kathirikai Kulambu (Stuffed Brinjal Gravy)",
+        "name_ta": "எண்ணெய் கத்திரிக்காய் குழம்பு",
+        "category": "Lunch",
+        "diet": "Vegetarian",
+        "time_mins": 30,
+        "difficulty": "Medium",
+        "cleaned_ingredients_en": ["brinjal", "shallot", "tomato", "tamarind", "coriander", "red chilli", "cumin", "sesame oil", "mustard", "salt"],
+        "cleaned_ingredients_ta": ["கத்திரிக்காய்", "சின்ன வெங்காயம்", "தக்காளி", "புளி", "கொத்தமல்லி விதை", "வரமிளகாய்", "சீரகம்", "நல்லெண்ணெய்", "கடுகு", "உப்பு"],
+        "ingredients_en": "- 8 small purple Brinjals (slit into four with stalk intact)\n- 12 Small Onions\n- 2 Tomatoes\n- 1 lemon Tamarind extract\n- 2 tbsp Coriander Seeds\n- 4-5 Dry Red Chillies\n- 1 tsp Cumin Seeds\n- 3 tbsp Sesame Oil\n- Mustard, Fenugreek, and Salt",
+        "ingredients_ta": "- 8 பிஞ்சு கத்திரிக்காய் (காம்புடன் 4 ஆக கீறியது)\n- 12 சின்ன வெங்காயம்\n- 2 தக்காளி\n- 1 எலுமிச்சை அளவு புளி சாறு\n- 2 மேஜைக்கரண்டி மல்லி விதை\n- 4-5 வரமிளகாய்\n- 1 தேக்கரண்டி சீரகம்\n- 3 மேஜைக்கரண்டி நல்லெண்ணெய், கடுகு, வெந்தயம், உப்பு",
+        "instructions_en": "1. Roast coriander seeds, dry red chillies, and cumin; grind into a fragrant masala powder.\n2. Stuff part of the masala inside the slit brinjals.\n3. Heat sesame oil, shallow fry the stuffed brinjals until skin blisters and softens (about 5 mins); remove.\n4. In the same oil, crackle mustard, fenugreek, sauté shallots and tomatoes until soft.\n5. Add tamarind extract, remaining masala, salt, and water. Bring to boil, drop in the fried brinjals, and simmer covered until rich oil surfaces.",
+        "instructions_ta": "1. மல்லி, வரமிளகாய், சீரகத்தை வறுத்து நைசாக அரைத்து மசாலா பொடி தயார் செய்யவும்.\n2. கத்திரிக்காயின் உள்ளே இந்த மசாலாவை சிறிதளவு அடைத்து வைக்கவும்.\n3. நல்லெண்ணெயில் கத்திரிக்காயை போட்டு வதக்கி தனியாக எடுக்கவும்.\n4. அதே எண்ணெயில் கடுகு, வெந்தயம், சின்ன வெங்காயம், தக்காளி வதக்கவும்.\n5. புளித்தண்ணீர், மீதமுள்ள மசாலா, உப்பு சேர்த்து கொதித்ததும் வதக்கிய கத்திரிக்காய் சேர்த்து எண்ணெய் பிரியும் வரை சுண்டவிடவும்!"
+    },
+    {
+        "id": "tn_l5",
+        "name_en": "Crispy Urulaikizhangu Roast (South Indian Potato Fry)",
+        "name_ta": "உருளைக்கிழங்கு வறுவல் (ரோஸ்ட்)",
+        "category": "Lunch",
+        "diet": "Vegetarian",
+        "time_mins": 20,
+        "difficulty": "Easy",
+        "cleaned_ingredients_en": ["potato", "mustard", "urad dal", "sambar powder", "turmeric", "curry leaf", "asafoetida", "salt", "oil"],
+        "cleaned_ingredients_ta": ["உருளைக்கிழங்கு", "கடுகு", "உளுத்தம் பருப்பு", "சாம்பார் பொடி", "மஞ்சள்தூள்", "கருவேப்பிலை", "பெருங்காயம்", "உப்பு", "எண்ணெய்"],
+        "ingredients_en": "- 3 medium Potatoes (boiled, peeled, cubed)\n- 1 tsp Mustard Seeds\n- 1 tsp Urad Dal\n- 1.5 tbsp Sambar Powder / Red Chilli Powder\n- 1/2 tsp Turmeric Powder\n- 1 sprig Curry Leaves\n- 1/4 tsp Asafoetida\n- 2.5 tbsp Oil\n- Salt to taste",
+        "ingredients_ta": "- 3 வேகவைத்து துண்டுகளாக்கிய உருளைக்கிழங்கு\n- 1 தேக்கரண்டி கடுகு\n- 1 தேக்கரண்டி உளுத்தம் பருப்பு\n- 1.5 மேஜைக்கரண்டி சாம்பார்/மிளகாய் தூள்\n- 1/2 தேக்கரண்டி மஞ்சள்தூள்\n- 1 கொத்து கருவேப்பிலை\n- 1/4 தேக்கரண்டி பெருங்காயம்\n- 2.5 மேஜைக்கரண்டி எண்ணெய், உப்பு",
+        "instructions_en": "1. Heat oil in a heavy iron kadai; crackle mustard seeds, urad dal, curry leaves, and asafoetida.\n2. Add boiled potato cubes, turmeric powder, sambar powder, and salt.\n3. Toss well on medium-low flame for 12-15 minutes, turning occasionally, until potatoes develop a deep golden, crispy outer crust.\n4. The undisputed king of side dishes for Sambar Sadam, Rasam Sadam, or Thayir Sadam!",
+        "instructions_ta": "1. இரும்பு கடாயில் எண்ணெய் ஊற்றி கடுகு, உளுத்தம் பருப்பு, கருவேப்பிலை, பெருங்காயம் தாளிக்கவும்.\n2. நறுக்கிய உருளைக்கிழங்கு, மஞ்சள்தூள், சாம்பார் தூள், உப்பு சேர்க்கவும்.\n3. மிதமான தீயில் 12-15 நிமிடங்கள் அடிபிடிக்காமல் பிரட்டி மொறுமொறுப்பான சிவந்த நிறம் வரும் வரை வறுக்கவும்.\n4. சாம்பார் சாதம், ரசம் சாதம், தயிர் சாதத்திற்கு தலைசிறந்த சைட் டிஷ்!"
+    },
+    {
+        "id": "tn_l6",
+        "name_en": "Dindigul Thalappakatti Style Biryani",
+        "name_ta": "திண்டுக்கல் தலப்பாகட்டி பிரியாணி",
+        "category": "Lunch",
+        "diet": "Non-Vegetarian",
+        "time_mins": 45,
+        "difficulty": "Medium",
+        "cleaned_ingredients_en": ["seeraga samba rice", "chicken", "shallot", "ginger", "garlic", "green chilli", "curd", "mint", "coriander", "ghee", "clove", "cinnamon", "cardamom", "salt"],
+        "cleaned_ingredients_ta": ["சீரக சம்பா அரிசி", "சிக்கன்", "சின்ன வெங்காயம்", "இஞ்சி", "பூண்டு", "பச்சை மிளகாய்", "தயிர்", "புதினா", "கொத்தமல்லி", "நெய்", "கிராம்பு", "பட்டை", "ஏலக்காய்", "உப்பு"],
+        "ingredients_en": "- 2 cups Seeraga Samba Rice (soaked 20 mins)\n- 500g Chicken (curry pieces)\n- 20 Shallots (ground into paste)\n- 2 tbsp Ginger-Garlic paste\n- 4 Green Chillies (ground)\n- 1/4 cup thick Curd\n- 1/2 cup Mint & Coriander Leaves\n- 3 tbsp Ghee & 2 tbsp Oil\n- Whole Biryani Spices (cinnamon, clove, cardamom, mace)\n- Salt to taste",
+        "ingredients_ta": "- 2 கப் சீரக சம்பா அரிசி\n- 500 கிராம் சிக்கன்\n- 20 சின்ன வெங்காயம் (அரைத்தது)\n- 2 மேஜைக்கரண்டி இஞ்சி-பூண்டு விழுது\n- 4 பச்சை மிளகாய் விழுது\n- 1/4 கப் தயிர்\n- புதினா, கொத்தமல்லி தழை\n- 3 மேஜைக்கரண்டி நெய், 2 மேஜைக்கரண்டி எண்ணெய்\n- பட்டை, கிராம்பு, ஏலக்காய், கல்பாசி\n- உப்பு",
+        "instructions_en": "1. In a biryani handi, heat ghee and oil; fry whole spices until fragrant.\n2. Add ground shallots and green chilli paste; sauté until golden brown. Add ginger-garlic paste and cook for 2 minutes.\n3. Add curd, mint, coriander, and chicken pieces; sauté on high heat until chicken absorbs flavors.\n4. Add 3.5 cups water and salt; bring to a rolling boil. Add drained seeraga samba rice.\n5. Cook until rice and water are at same level, seal with a tight lid on low flame (dum) for 15 minutes.\n6. Fluff gently and serve with onion thayir pachadi and spicy salna!",
+        "instructions_ta": "1. பாத்திரத்தில் நெய், எண்ணெய் ஊற்றி பட்டை, கிராம்பு, ஏலக்காய் தாளிக்கவும்.\n2. சின்ன வெங்காய விழுது, பச்சை மிளகாய் விழுது, இஞ்சி-பூண்டு விழுது சேர்த்து நன்றாக வதக்கவும்.\n3. தயிர், புதினா, கொத்தமல்லி மற்றும் சிக்கன் துண்டுகளை சேர்த்து வதக்கவும்.\n4. 3.5 கப் தண்ணீர், உப்பு சேர்த்து கொதித்ததும் சீரக சம்பா அரிசியைப் போடவும்.\n5. தண்ணீர் வற்றியதும் தட்டு போட்டு மூடி குறைந்த தீயில் 15 நிமிடங்கள் தம் போடவும்.\n6. சுடச்சுட வெங்காய பச்சடி மற்றும் சால்னாவுடன் பரிமாறவும்!"
+    },
+
+    # ========================================================
+    # 3. SNACKS (மாலை சிற்றுண்டி)
+    # ========================================================
+    {
+        "id": "tn_s1",
+        "name_en": "Crispy Masala Vadai (Paruppu Vadai)",
+        "name_ta": "கொரு கொரு மசால் வடை",
+        "category": "Snacks",
+        "diet": "Vegetarian",
+        "time_mins": 25,
+        "difficulty": "Easy",
+        "cleaned_ingredients_en": ["chana dal", "onion", "fennel", "red chilli", "ginger", "garlic", "curry leaf", "coriander", "salt", "oil"],
+        "cleaned_ingredients_ta": ["கடலைப்பருப்பு", "வெங்காயம்", "சோம்பு", "வரமிளகாய்", "இஞ்சி", "பூண்டு", "கருவேப்பிலை", "கொத்தமல்லி", "உப்பு", "எண்ணெய்"],
+        "ingredients_en": "- 1 cup Chana Dal (Kadalai Paruppu)\n- 1 large Onion (finely chopped)\n- 1 tsp Fennel Seeds (Sombu)\n- 3 Dry Red Chillies\n- 1 inch Ginger & 4 cloves Garlic\n- 1 sprig Curry Leaves & Coriander\n- Salt and Oil for deep frying",
+        "ingredients_ta": "- 1 கப் கடலைப்பருப்பு\n- 1 பொடியாக நறுக்கிய வெங்காயம்\n- 1 தேக்கரண்டி சோம்பு\n- 3 வரமிளகாய்\n- 1 துண்டு இஞ்சி, 4 பல் பூண்டு\n- கருவேப்பிலை, கொத்தமல்லி\n- உப்பு மற்றும் எண்ணெய்",
+        "instructions_en": "1. Soak chana dal for 2 hours; set aside 2 tbsp whole dal and drain the rest completely.\n2. Coarsely grind dal with dry red chillies, fennel seeds, ginger, and garlic without adding water.\n3. Mix in chopped onion, curry leaves, coriander, whole dal, and salt.\n4. Shape into flat round patties and deep fry in hot oil on medium flame until crunchy and deep golden.\n5. The ultimate tea-time snack with hot filter coffee!",
+        "instructions_ta": "1. கடலைப்பருப்பை 2 மணி நேரம் ஊறவைத்து, 2 ஸ்பூன் தனியாக எடுத்துவிட்டு மீதியை வடிக்கவும்.\n2. தண்ணீர் சேர்க்காமல் வரமிளகாய், சோம்பு, இஞ்சி, பூண்டு சேர்த்து கரகரப்பாக அரைக்கவும்.\n3. நறுக்கிய வெங்காயம், கருவேப்பிலை, கொத்தமல்லி, முழு பருப்பு, உப்பு சேர்த்து பிசையவும்.\n4. தட்டையாக வடை வடிவில் தட்டி, மிதமான சூடுள்ள எண்ணெயில் பொன்னிறமாக பொரித்தெடுக்கவும்.\n5. சுடச்சுட பில்டர் காபியுடன் சாப்பிடும் மாலை நேர அற்புதம்!"
+    },
+    {
+        "id": "tn_s2",
+        "name_en": "Roadside Style Onion Bajji & Potato Bajji",
+        "name_ta": "மழைக்கால வெங்காய பஜ்ஜி",
+        "category": "Snacks",
+        "diet": "Vegetarian",
+        "time_mins": 15,
+        "difficulty": "Easy",
+        "cleaned_ingredients_en": ["besan", "rice flour", "onion", "red chilli powder", "asafoetida", "ajwain", "salt", "oil"],
+        "cleaned_ingredients_ta": ["கடலை மாவு", "அரிசி மாவு", "வெங்காயம்", "மிளகாய் தூள்", "பெருங்காயம்", "ஓமம்", "உப்பு", "எண்ணெய்"],
+        "ingredients_en": "- 1 cup Gram Flour (Besan / Kadalai Maavu)\n- 2 tbsp Rice Flour (for crispiness)\n- 2 large Onions (sliced into circular rings)\n- 1 tsp Red Chilli Powder\n- 1/4 tsp Asafoetida & Ajwain (Omam)\n- Salt and Oil for frying",
+        "ingredients_ta": "- 1 கப் கடலை மாவு\n- 2 மேஜைக்கரண்டி அரிசி மாவு\n- 2 வட்டமாக நறுக்கிய பெரிய வெங்காயம்\n- 1 தேக்கரண்டி மிளகாய் தூள்\n- 1/4 தேக்கரண்டி பெருங்காயம், ஓமம்\n- உப்பு, எண்ணெய்",
+        "instructions_en": "1. Whisk besan, rice flour, chilli powder, asafoetida, ajwain, salt, and water into a smooth, lump-free batter of coating consistency.\n2. Dip onion slices into the batter until well coated.\n3. Gently slide into hot oil and fry until puffed, golden, and crispy on both sides.\n4. Drain on paper towels and enjoy with spicy coconut chutney!",
+        "instructions_ta": "1. கடலை மாவு, அரிசி மாவு, மிளகாய் தூள், பெருங்காயம், ஓமம், உப்பு சேர்த்து பஜ்ஜி மாவு பதத்திற்கு கரைக்கவும்.\n2. வெங்காய துண்டுகளை மாவில் முக்கி எடுக்கவும்.\n3. சூடான எண்ணெயில் போட்டு உப்பி பொன்னிறமாக வேகவைத்து எடுக்கவும்.\n4. சுடச்சுட கார சட்னியுடன் மழை நேரத்தில் சுவைக்கவும்!"
+    },
+    {
+        "id": "tn_s3",
+        "name_en": "Navaratri White Chana Sundal (Kondakadalai Sundal)",
+        "name_ta": "கொண்டைக்கடலை சுண்டல்",
+        "category": "Snacks",
+        "diet": "Vegetarian",
+        "time_mins": 20,
+        "difficulty": "Easy",
+        "cleaned_ingredients_en": ["white chana", "coconut", "mustard", "urad dal", "green chilli", "curry leaf", "asafoetida", "oil", "salt"],
+        "cleaned_ingredients_ta": ["வெள்ளை கொண்டைக்கடலை", "தேங்காய் துருவல்", "கடுகு", "உளுத்தம் பருப்பு", "பச்சை மிளகாய்", "கருவேப்பிலை", "பெருங்காயம்", "எண்ணெய்", "உப்பு"],
+        "ingredients_en": "- 1 cup White Chickpeas (soaked overnight)\n- 3 tbsp grated fresh Coconut\n- 1 tsp Mustard Seeds\n- 1 tsp Urad Dal\n- 2 Green Chillies (chopped)\n- 1 sprig Curry Leaves\n- 1/4 tsp Asafoetida\n- 1 tsp Coconut Oil\n- Salt to taste",
+        "ingredients_ta": "- 1 கப் இரவு ஊறவைத்த வெள்ளை கொண்டைக்கடலை\n- 3 மேஜைக்கரண்டி தேங்காய் துருவல்\n- 1 தேக்கரண்டி கடுகு\n- 1 தேக்கரண்டி உளுத்தம் பருப்பு\n- 2 பச்சை மிளகாய்\n- கருவேப்பிலை, பெருங்காயம், தேங்காய் எண்ணெய், உப்பு",
+        "instructions_en": "1. Pressure cook soaked chickpeas with water and salt for 4-5 whistles until tender.\n2. Heat coconut oil in a pan, crackle mustard, urad dal, curry leaves, green chillies, and asafoetida.\n3. Add boiled drained chickpeas and toss well for 2 minutes.\n4. Turn off heat, add freshly grated coconut, and mix gently. Healthy, protein-packed traditional snack!",
+        "instructions_ta": "1. ஊறவைத்த கொண்டைக்கடலையை உப்பு சேர்த்து குக்கரில் 4-5 விசில் விட்டு வேகவைக்கவும்.\n2. கடாயில் தேங்காய் எண்ணெய் ஊற்றி கடுகு, உளுந்து, பச்சை மிளகாய், கருவேப்பிலை, பெருங்காயம் தாளிக்கவும்.\n3. வெந்த சுண்டலை சேர்த்து 2 நிமிடங்கள் நன்றாகக் கிளறவும்.\n4. அடுப்பை அணைத்துவிட்டு தேங்காய் துருவல் சேர்த்து கிளறி பரிமாறவும்!"
+    },
+
+    # ========================================================
+    # 4. SWEETS (இனிப்பு வகைகள்)
+    # ========================================================
+    {
+        "id": "tn_sw1",
+        "name_en": "Authentic Sakkarai Pongal (Temple Sweet Pongal)",
+        "name_ta": "கோவில் சர்க்கரை பொங்கல்",
+        "category": "Sweets",
+        "diet": "Vegetarian",
+        "time_mins": 30,
+        "difficulty": "Easy",
+        "cleaned_ingredients_en": ["raw rice", "moong dal", "jaggery", "ghee", "cashew", "raisin", "cardamom", "edible camphor"],
+        "cleaned_ingredients_ta": ["பச்சரிசி", "பாசிப்பருப்பு", "வெல்லம்", "நெய்", "முந்திரி", "உலர் திராட்சை", "ஏலக்காய்", "பச்சை கற்பூரம்"],
+        "ingredients_en": "- 1 cup Raw Rice\n- 1/4 cup Yellow Moong Dal\n- 1.5 cups crushed dark Jaggery (Vellam)\n- 1/2 cup pure Ghee\n- 15 Cashews & 15 Raisins\n- 1/2 tsp Cardamom Powder\n- A tiny pinch of Edible Camphor (Pachai Karpooram)",
+        "ingredients_ta": "- 1 கப் பச்சரிசி\n- 1/4 கப் பாசிப்பருப்பு\n- 1.5 கப் பொடித்த வெல்லம்\n- 1/2 கப் சுத்தமான நெய்\n- 15 முந்திரி, 15 உலர் திராட்சை\n- 1/2 தேக்கரண்டி ஏலக்காய்த்தூள்\n- ஒரு சிட்டிகை பச்சை கற்பூரம்",
+        "instructions_en": "1. Roast moong dal lightly; pressure cook rice and dal with 3.5 cups water until soft and mashable.\n2. Melt jaggery in 1/2 cup water, strain impurities, and boil into a sticky syrup.\n3. Add jaggery syrup to the mashed rice-dal; cook on medium flame for 5 minutes stirring constantly.\n4. Fry cashews and raisins in golden ghee. Pour ghee, fried nuts, cardamom powder, and tiny pinch of edible camphor into the pongal.\n5. Rich, divine, temple-style sweet pongal is ready!",
+        "instructions_ta": "1. பாசிப்பருப்பை வறுத்து அரிசியுடன் சேர்த்து 3.5 கப் தண்ணீர் ஊற்றி குழைய வேகவைக்கவும்.\n2. வெல்லத்தை சிறிதளவு தண்ணீரில் கரைத்து வடிகட்டி பாகாகக் காய்ச்சவும்.\n3. வெந்த சாதத்தில் வெல்லப்பாகை ஊற்றி மிதமான தீயில் 5 நிமிடம் கிளறவும்.\n4. நெய்யில் முந்திரி, திராட்சை வறுத்து ஏலக்காய்த்தூள், சிட்டிகை பச்சை கற்பூரத்துடன் பொங்கலில் சேர்க்கவும்.\n5. கோவில் பிரசாத மணம் கமழும் சர்க்கரை பொங்கல் தயார்!"
+    },
+    {
+        "id": "tn_sw2",
+        "name_en": "Saravana Bhavan Style Rava Kesari",
+        "name_ta": "சரவண பவன் நெய் ரவா கேசரி",
+        "category": "Sweets",
+        "diet": "Vegetarian",
+        "time_mins": 20,
+        "difficulty": "Easy",
+        "cleaned_ingredients_en": ["rava", "sugar", "ghee", "cashew", "raisin", "cardamom", "kesari colour"],
+        "cleaned_ingredients_ta": ["ரவை", "சர்க்கரை", "நெய்", "முந்திரி", "உலர் திராட்சை", "ஏலக்காய்", "கேசரி பவுடர்"],
+        "ingredients_en": "- 1 cup Rava (Sooji / Semolina)\n- 1.5 cups Sugar\n- 1/2 cup pure Ghee\n- 3 cups boiling Water\n- 12 Cashews & 10 Raisins\n- 1/2 tsp Cardamom Powder\n- A pinch of Orange Food Color (optional)",
+        "ingredients_ta": "- 1 கப் ரவை\n- 1.5 கப் சர்க்கரை\n- 1/2 கப் நெய்\n- 3 கப் கொதிக்கும் தண்ணீர்\n- 12 முந்திரி, 10 உலர் திராட்சை\n- 1/2 தேக்கரண்டி ஏலக்காய்த்தூள், கேசரி கலர்",
+        "instructions_en": "1. Roast rava in 1 tbsp ghee until aromatic (do not brown).\n2. Boil 3 cups of water in a pan with a pinch of kesari color. Lower flame and slowly add roasted rava while whisking to prevent lumps.\n3. Cover and cook on low flame for 3 minutes until rava absorbs water completely.\n4. Add sugar and stir continuously; mixture will become glossy and semi-liquid.\n5. Pour in remaining ghee in batches, add fried cashews, raisins, and cardamom powder until kesari leaves pan sides without sticking.",
+        "instructions_ta": "1. ரவையை நெய்யில் வாசம் வரும் வரை வறுத்துக் கொள்ளவும்.\n2. பாத்திரத்தில் 3 கப் தண்ணீர், கேசரி கலர் சேர்த்து கொதிக்கவிடவும். வறுத்த ரவையை கட்டி பிடிக்காமல் கொட்டி கிளறவும்.\n3. ரவை வெந்ததும் சர்க்கரை சேர்த்து நன்றாகக் கிளறவும்.\n4. கொஞ்சம் கொஞ்சமாக நெய் ஊற்றி, நெய்யில் வறுத்த முந்திரி, திராட்சை, ஏலக்காய்த்தூள் சேர்த்து கிளறவும்.\n5. பாத்திரத்தில் ஒட்டாமல் அல்வா போல நெய் பிரிந்து வரும் போது இறக்கவும்!"
+    },
+    {
+        "id": "tn_sw3",
+        "name_en": "Creamy South Indian Paal Payasam",
+        "name_ta": "சுவையான பால் பாயாசம்",
+        "category": "Sweets",
+        "diet": "Vegetarian",
+        "time_mins": 25,
+        "difficulty": "Easy",
+        "cleaned_ingredients_en": ["raw rice", "milk", "sugar", "ghee", "cashew", "cardamom"],
+        "cleaned_ingredients_ta": ["பச்சரிசி", "பால்", "சர்க்கரை", "நெய்", "முந்திரி", "ஏலக்காய்"],
+        "ingredients_en": "- 1/4 cup Raw Rice (washed)\n- 4 cups full fat Milk\n- 1/2 cup Sugar or Condensed Milk\n- 2 tbsp pure Ghee\n- 10 Cashews\n- 1/2 tsp Cardamom Powder",
+        "ingredients_ta": "- 1/4 கப் பச்சரிசி\n- 4 கப் பசும்பால்\n- 1/2 கப் சர்க்கரை\n- 2 மேஜைக்கரண்டி நெய்\n- 10 முந்திரி, ஏலக்காய்த்தூள்",
+        "instructions_en": "1. Sauté washed rice in 1 tsp ghee for 1 minute.\n2. Bring milk to a gentle boil in a heavy-bottomed pan. Add rice and simmer on low heat, stirring occasionally, until rice is tender and milk reduces to half.\n3. Stir in sugar and cardamom powder; simmer for 5 more minutes until creamy.\n4. Garnish with golden fried cashews. Delicious served warm or chilled!",
+        "instructions_ta": "1. பச்சரிசியை 1 ஸ்பூன் நெய்யில் லேசாக வறுக்கவும்.\n2. பாலை பாத்திரத்தில் ஊற்றி காய்ச்சி, அரிசியைப் போட்டு குறைந்த தீயில் பால் பாதியாக சுண்டும் வரை வேகவிடவும்.\n3. சர்க்கரை மற்றும் ஏலக்காய்த்தூள் சேர்த்து 5 நிமிடம் கொதிக்கவிடவும்.\n4. நெய்யில் வறுத்த முந்திரி பருப்பு தூவி பரிமாறவும். சூடாகவும் குளிர வைத்தும் பருகலாம்!"
+    },
+
+    # ==================== ADDITIONAL BREAKFAST & TIFFIN ====================
+    {
+        "id": "tn_b7",
+        "name_en": "Hotel Style White Coconut Chutney (Thengai Chutney)",
+        "name_ta": "ஹோட்டல் தேங்காய் சட்னி",
+        "category": "Breakfast",
+        "diet": "Vegetarian",
+        "time_mins": 10,
+        "difficulty": "Easy",
+        "cleaned_ingredients_en": ["coconut", "green chilli", "roasted gram", "ginger", "salt", "mustard", "urad dal", "curry leaf", "oil"],
+        "cleaned_ingredients_ta": ["தேங்காய்", "பச்சை மிளகாய்", "பொட்டுக்கடலை", "இஞ்சி", "உப்பு", "கடுகு", "உளுத்தம் பருப்பு", "கருவேப்பிலை", "எண்ணெய்"],
+        "ingredients_en": "- 1 cup grated fresh Coconut\n- 2 Green Chillies\n- 2 tbsp Roasted Gram (Pottukadalai)\n- 1/2 inch Ginger\n- Salt to taste\n- 1 tsp Mustard Seeds & Urad Dal\n- 1 sprig Curry Leaves & 1 tsp Oil",
+        "ingredients_ta": "- 1 கப் துருவிய தேங்காய்\n- 2 பச்சை மிளகாய்\n- 2 மேஜைக்கரண்டி பொட்டுக்கடலை\n- 1 துண்டு இஞ்சி\n- உப்பு\n- கடுகு, உளுந்து, கருவேப்பிலை, எண்ணெய்",
+        "instructions_en": "1. Blend coconut, green chillies, roasted gram, ginger, and salt with 1/4 cup water into a smooth paste.\n2. Heat 1 tsp oil, crackle mustard seeds, urad dal, and curry leaves.\n3. Pour the tempering over the chutney and serve with hot idlis or crispy dosas!",
+        "instructions_ta": "1. தேங்காய், பச்சை மிளகாய், பொட்டுக்கடலை, இஞ்சி, உப்பு சேர்த்து சிறிதளவு தண்ணீர் விட்டு அரைக்கவும்.\n2. எண்ணெயில் கடுகு, உளுந்து, கருவேப்பிலை தாளித்து சட்னியில் கொட்டவும்.\n3. சுடச்சுட இட்லி, தோசையுடன் பரிமாறவும்!"
+    },
+    {
+        "id": "tn_b8",
+        "name_en": "Spicy Tomato Onion Chutney (Thakkali Vengaya Chutney)",
+        "name_ta": "காரசாரமான தக்காளி வெங்காய சட்னி",
+        "category": "Breakfast",
+        "diet": "Vegetarian",
+        "time_mins": 15,
+        "difficulty": "Easy",
+        "cleaned_ingredients_en": ["tomato", "onion", "garlic", "red chilli", "mustard", "urad dal", "curry leaf", "salt", "sesame oil"],
+        "cleaned_ingredients_ta": ["தக்காளி", "வெங்காயம்", "பூண்டு", "வரமிளகாய்", "கடுகு", "உளுத்தம் பருப்பு", "கருவேப்பிலை", "உப்பு", "நல்லெண்ணெய்"],
+        "ingredients_en": "- 3 ripe Tomatoes\n- 1 large Onion\n- 5 cloves Garlic\n- 4 Dry Red Chillies\n- 1 tsp Mustard & Urad Dal\n- Sesame Oil and Salt",
+        "ingredients_ta": "- 3 தக்காளி\n- 1 பெரிய வெங்காயம்\n- 5 பல் பூண்டு\n- 4 வரமிளகாய்\n- கடுகு, உளுந்து, நல்லெண்ணெய், உப்பு",
+        "instructions_en": "1. Sauté red chillies, garlic, onion, and tomatoes in sesame oil until mushy. Cool and grind smooth.\n2. Temper with mustard seeds and curry leaves in hot sesame oil. Perfect for dosas, idlis, and uthappams!",
+        "instructions_ta": "1. நல்லெண்ணெயில் வரமிளகாய், பூண்டு, வெங்காயம், தக்காளி வதக்கி ஆறியதும் நைசாக அரைக்கவும்.\n2. கடுகு, கருவேப்பிலை தாளித்துக் கொட்டி தோசையுடன் சுவைக்கவும்!"
+    },
+    {
+        "id": "tn_b9",
+        "name_en": "Traditional Rava Upma (Sooji Upma)",
+        "name_ta": "பாரம்பரிய ரவா உப்புமா",
+        "category": "Breakfast",
+        "diet": "Vegetarian",
+        "time_mins": 15,
+        "difficulty": "Easy",
+        "cleaned_ingredients_en": ["rava", "onion", "green chilli", "ginger", "mustard", "urad dal", "curry leaf", "ghee", "salt"],
+        "cleaned_ingredients_ta": ["ரவை", "வெங்காயம்", "பச்சை மிளகாய்", "இஞ்சி", "கடுகு", "உளுத்தம் பருப்பு", "கருவேப்பிலை", "நெய்", "உப்பு"],
+        "ingredients_en": "- 1 cup Rava (roasted)\n- 1 Onion (chopped)\n- 2 Green Chillies & 1 inch Ginger\n- 1 tsp Mustard Seeds & Urad Dal\n- 2.5 cups Water\n- Ghee, Salt, and Curry Leaves",
+        "ingredients_ta": "- 1 கப் வறுத்த ரவை\n- 1 வெங்காயம்\n- 2 பச்சை மிளகாய், இஞ்சி\n- கடுகு, உளுத்தம் பருப்பு\n- 2.5 கப் தண்ணீர், நெய், உப்பு",
+        "instructions_en": "1. Heat oil/ghee, crackle mustard, urad dal, curry leaves, onions, chillies, and ginger.\n2. Add 2.5 cups water and salt; bring to a rolling boil.\n3. Add roasted rava slowly while stirring to prevent lumps. Cover and cook for 3 minutes on low flame.\n4. Drizzle a spoon of ghee and serve warm with coconut chutney or sugar!",
+        "instructions_ta": "1. எண்ணெயில் கடுகு, உளுந்து, கருவேப்பிலை, வெங்காயம், பச்சை மிளகாய், இஞ்சி வதக்கவும்.\n2. 2.5 கப் தண்ணீர் மற்றும் உப்பு சேர்த்து கொதிக்கவிடவும்.\n3. வறுத்த ரவையை கட்டி தட்டாமல் தூவி கிளறி, மூடி வைத்து 3 நிமிடம் வேகவிடவும்.\n4. நெய் ஊற்றி இறக்கி தேங்காய் சட்னியுடன் சுடச்சுட பரிமாறவும்!"
+    },
+    # ==================== ADDITIONAL LUNCH ====================
+    {
+        "id": "tn_l7",
+        "name_en": "South Indian Curd Rice (Thayir Sadam)",
+        "name_ta": "சுவையான தயிர் சாதம்",
+        "category": "Lunch",
+        "diet": "Vegetarian",
+        "time_mins": 10,
+        "difficulty": "Easy",
+        "cleaned_ingredients_en": ["rice", "curd", "milk", "mustard", "green chilli", "ginger", "curry leaf", "coriander", "asafoetida", "salt"],
+        "cleaned_ingredients_ta": ["சாதம்", "தயிர்", "பால்", "கடுகு", "பச்சை மிளகாய்", "இஞ்சி", "கருவேப்பிலை", "கொத்தமல்லி", "பெருங்காயம்", "உப்பு"],
+        "ingredients_en": "- 1 cup cooked Rice (mashed)\n- 1 cup fresh Curd & 1/4 cup Milk\n- 1 tsp Mustard Seeds\n- 1 Green Chilli & 1/2 inch Ginger\n- Curry leaves, Asafoetida, and Salt",
+        "ingredients_ta": "- 1 கப் குழைந்த சாதம்\n- 1 கப் கெட்டி தயிர், 1/4 கப் பால்\n- கடுகு, பச்சை மிளகாய், இஞ்சி\n- கருவேப்பிலை, பெருங்காயம், உப்பு",
+        "instructions_en": "1. Mix mashed warm rice with curd, milk, and salt until creamy.\n2. Temper mustard seeds, green chilli, ginger, asafoetida, and curry leaves in hot oil; pour into rice.\n3. Garnish with coriander and serve cool with spicy mango pickle!",
+        "instructions_ta": "1. குழைந்த சாதத்துடன் தயிர், பால், உப்பு சேர்த்து பிசையவும்.\n2. எண்ணெயில் கடுகு, பச்சை மிளகாய், இஞ்சி, கருவேப்பிலை, பெருங்காயம் தாளித்துக் கொட்டி கலக்கவும்.\n3. மாங்காய் ஊறுகாயுடன் குளிர்ந்து பரிமாறவும்!"
+    },
+    {
+        "id": "tn_l8",
+        "name_en": "Traditional Lemon Rice (Elumichai Sadam)",
+        "name_ta": "எலுமிச்சை சாதம் (சித்ரான்னம்)",
+        "category": "Lunch",
+        "diet": "Vegetarian",
+        "time_mins": 15,
+        "difficulty": "Easy",
+        "cleaned_ingredients_en": ["rice", "lemon juice", "peanut", "turmeric", "mustard", "urad dal", "green chilli", "curry leaf", "oil", "salt"],
+        "cleaned_ingredients_ta": ["சாதம்", "எலுமிச்சை சாறு", "வேர்க்கடலை", "மஞ்சள்தூள்", "கடுகு", "உளுத்தம் பருப்பு", "பச்சை மிளகாய்", "கருவேப்பிலை", "எண்ணெய்", "உப்பு"],
+        "ingredients_en": "- 2 cups cooked Rice (cooled)\n- 2 tbsp fresh Lemon Juice\n- 2 tbsp raw Peanuts\n- 1/2 tsp Turmeric Powder\n- Mustard, Urad Dal, Green Chilli, Curry Leaves, and Salt",
+        "ingredients_ta": "- 2 கப் உதிரியான சாதம்\n- 2 மேஜைக்கரண்டி எலுமிச்சை சாறு\n- 2 மேஜைக்கரண்டி வேர்க்கடலை\n- மஞ்சள்தூள், கடுகு, உளுந்து, பச்சை மிளகாய், கருவேப்பிலை, உப்பு",
+        "instructions_en": "1. Roast peanuts, mustard, urad dal, green chillies, curry leaves, and turmeric in oil.\n2. Turn off flame, stir in fresh lemon juice and salt.\n3. Toss in cooled rice until evenly coated in golden seasoning. Perfect for lunchboxes with potato roast!",
+        "instructions_ta": "1. எண்ணெயில் வேர்க்கடலை, கடுகு, உளுந்து, பச்சை மிளகாய், கருவேப்பிலை, மஞ்சள்தூள் வறுக்கவும்.\n2. அடுப்பை அணைத்து எலுமிச்சை சாறு, உப்பு சேர்க்கவும்.\n3. ஆறிய சாதத்தில் கொட்டி கிளறி உருளைக்கிழங்கு வறுவலுடன் பரிமாறவும்!"
+    },
+    {
+        "id": "tn_l9",
+        "name_en": "Chettinad Spicy Chicken Gravy (Koli Kulambu)",
+        "name_ta": "செட்டிநாடு கோழிக் குழம்பு",
+        "category": "Lunch",
+        "diet": "Non-Vegetarian",
+        "time_mins": 35,
+        "difficulty": "Medium",
+        "cleaned_ingredients_en": ["chicken", "shallot", "tomato", "ginger", "garlic", "coconut", "fennel", "black pepper", "coriander", "chilli", "curry leaf", "sesame oil", "salt"],
+        "cleaned_ingredients_ta": ["சிக்கன்", "சின்ன வெங்காயம்", "தக்காளி", "இஞ்சி", "பூண்டு", "தேங்காய்", "சோம்பு", "மிளகு", "மல்லி", "மிளகாய்", "கருவேப்பிலை", "நல்லெண்ணெய்", "உப்பு"],
+        "ingredients_en": "- 500g Chicken\n- 15 Shallots & 2 Tomatoes\n- Fresh Chettinad masala ground from roasted fennel, pepper, coriander, dry chillies, and coconut\n- 1 tbsp Ginger-Garlic paste\n- Sesame oil, Curry leaves, and Salt",
+        "ingredients_ta": "- 500 கிராம் சிக்கன்\n- 15 சின்ன வெங்காயம், 2 தக்காளி\n- வறுத்து அரைத்த சோம்பு, மிளகு, மல்லி, வரமிளகாய், தேங்காய் விழுது\n- இஞ்சி-பூண்டு விழுது, நல்லெண்ணெய், கருவேப்பிலை, உப்பு",
+        "instructions_en": "1. Sauté curry leaves, shallots, and ginger-garlic paste in sesame oil; add tomatoes and cook soft.\n2. Add chicken, turmeric, and salt; sear on high flame for 4 minutes.\n3. Add freshly ground Chettinad spice paste and 1 cup water; simmer for 15-20 minutes until oil surfaces and chicken is succulent.",
+        "instructions_ta": "1. நல்லெண்ணெயில் சின்ன வெங்காயம், இஞ்சி-பூண்டு விழுது, தக்காளி வதக்கவும்.\n2. சிக்கன், மஞ்சள்தூள், உப்பு சேர்த்து வதக்கவும்.\n3. அரைத்த செட்டிநாடு மசாலா விழுது, தண்ணீர் சேர்த்து சிக்கன் வேகும் வரை 15 நிமிடங்கள் கொதிக்கவிடவும்!"
+    },
+    {
+        "id": "tn_l10",
+        "name_en": "Village Style Meen Kulambu (South Indian Fish Curry)",
+        "name_ta": "கிராமத்து மீன் குழம்பு",
+        "category": "Lunch",
+        "diet": "Non-Vegetarian",
+        "time_mins": 30,
+        "difficulty": "Medium",
+        "cleaned_ingredients_en": ["fish", "shallot", "tomato", "garlic", "tamarind", "sambar powder", "fenugreek", "mustard", "curry leaf", "sesame oil", "salt"],
+        "cleaned_ingredients_ta": ["மீன்", "சின்ன வெங்காயம்", "தக்காளி", "பூண்டு", "புளி", "குழம்பு தூள்", "வெந்தயம்", "கடுகு", "கருவேப்பிலை", "நல்லெண்ணெய்", "உப்பு"],
+        "ingredients_en": "- 500g Sea Fish (Vanjaram / Sankara)\n- 15 Shallots & 8 cloves Garlic\n- 2 ripe Tomatoes & 1 big lemon Tamarind\n- 2.5 tbsp Fish Curry Powder\n- Fenugreek, Mustard, Curry leaves, Sesame oil, Salt",
+        "ingredients_ta": "- 500 கிராம் மீன் (வஞ்சிரம் / சங்கரா)\n- 15 சின்ன வெங்காயம், 8 பல் பூண்டு\n- 2 தக்காளி, 1 பெரிய எலுமிச்சை அளவு புளி\n- 2.5 மேஜைக்கரண்டி மீன் குழம்பு தூள், வெந்தயம், கடுகு, நல்லெண்ணெய், உப்பு",
+        "instructions_en": "1. Heat sesame oil in a clay pot; crackle mustard, fenugreek, curry leaves, garlic, and shallots.\n2. Add tomatoes, kulambu powder, and thick tamarind extract with 1.5 cups water; boil for 12 minutes until oil separates.\n3. Gently slide cleaned fish pieces into the boiling gravy. Simmer for 5-6 minutes until fish is cooked through.\n4. Best enjoyed after resting for a few hours with steamed rice!",
+        "instructions_ta": "1. மண் சட்டியில் நல்லெண்ணெய் ஊற்றி கடுகு, வெந்தயம், பூண்டு, சின்ன வெங்காயம், தக்காளி வதக்கவும்.\n2. குழம்பு தூள், புளி சாறு, தண்ணீர் சேர்த்து எண்ணெய் பிரியும் வரை 12 நிமிடம் கொதிக்கவிடவும்.\n3. மீன் துண்டுகளை மெதுவாக போட்டு 5-6 நிமிடங்கள் வேகவைத்து இறக்கவும். மண் சட்டியில் ஊறி சாப்பிட சுவை அள்ளும்!"
+    },
+    # ==================== ADDITIONAL SWEETS ====================
+    {
+        "id": "tn_sw4",
+        "name_en": "Melt in Mouth Traditional Ghee Mysore Pak",
+        "name_ta": "நெய் மைசூர் பாக்",
+        "category": "Sweets",
+        "diet": "Vegetarian",
+        "time_mins": 25,
+        "difficulty": "Medium",
+        "cleaned_ingredients_en": ["besan", "sugar", "ghee", "cardamom", "water"],
+        "cleaned_ingredients_ta": ["கடலை மாவு", "சர்க்கரை", "நெய்", "ஏலக்காய்", "தண்ணீர்"],
+        "ingredients_en": "- 1 cup Besan (sifted)\n- 1.5 cups Sugar\n- 1.5 cups pure melted Ghee\n- 1/4 tsp Cardamom Powder",
+        "ingredients_ta": "- 1 கப் சலித்த கடலை மாவு\n- 1.5 கப் சர்க்கரை\n- 1.5 கப் சூடான நெய்\n- 1/4 தேக்கரண்டி ஏலக்காய்த்தூள்",
+        "instructions_en": "1. Sift besan and mix with 1/2 cup warm ghee without lumps.\n2. Boil sugar and 1/2 cup water to one-string consistency.\n3. Add besan mixture and stir continuously on medium flame.\n4. Gradually pour in hot melted ghee ladle by ladle while stirring until mixture becomes frothy and pours like molten silk.\n5. Pour into a greased tray, let cool slightly, and slice into diamond pieces!",
+        "instructions_ta": "1. கடலை மாவை சலித்து அரை கப் நெய்யில் கட்டியில்லாமல் கரைக்கவும்.\n2. சர்க்கரையில் தண்ணீர் ஊற்றி ஒரு கம்பி பதம் பாகு காய்ச்சவும்.\n3. கடலை மாவு கரைசலை ஊற்றி தொடர்ந்து கிளறவும்.\n4. சூடான நெய்யை கரண்டி கரண்டியாக ஊற்றி நுரைத்து வரும் வரை கிளறி நெய் தடவிய தட்டில் ஊற்றவும்.\n5. ஆறியதும் வில்லைகளாக வெட்டி வாயில் கரையும் மைசூர் பாக் ருசிக்கவும்!"
+    },
+    {
+        "id": "tn_d1",
+        "name_en": "Madurai Style Kothu Parotta",
+        "name_ta": "மதுரை கொத்து பரோட்டா",
+        "category": "Dinner",
+        "diet": "Non-Vegetarian",
+        "time_mins": 20,
+        "difficulty": "Easy",
+        "cleaned_ingredients_en": ["parotta", "egg", "onion", "tomato", "green chilli", "curry leaf", "chicken salna", "oil", "salt"],
+        "cleaned_ingredients_ta": ["பரோட்டா", "முட்டை", "வெங்காயம்", "தக்காளி", "பச்சை மிளகாய்", "கருவேப்பிலை", "சால்னா", "எண்ணெய்", "உப்பு"],
+        "ingredients_en": "- 3 Parottas (shredded into small bits)\n- 2 Eggs\n- 1 large Onion (chopped)\n- 1 Tomato (chopped)\n- 2 Green Chillies\n- 1/2 cup Spicy Chicken / Veg Salna\n- 1 sprig Curry Leaves\n- 2 tbsp Oil\n- Salt and Pepper",
+        "ingredients_ta": "- 3 பரோட்டா (துண்டுகளாக பிய்த்தது)\n- 2 முட்டை\n- 1 பெரிய வெங்காயம்\n- 1 தக்காளி\n- 2 பச்சை மிளகாய்\n- 1/2 கப் காரசாரமான சால்னா\n- கருவேப்பிலை, எண்ணெய், உப்பு, மிளகுத்தூள்",
+        "instructions_en": "1. Heat oil on a large flat iron griddle (tawa). Add curry leaves, chopped onions, and green chillies; sauté till translucent.\n2. Add tomatoes and cook for 2 minutes.\n3. Crack 2 eggs onto the tawa, season with salt and pepper, scramble lightly.\n4. Add shredded parotta pieces and pour salna generously.\n5. Using two sharp metal spatulas or cups, vigorously chop, shred, and mince everything together on high flame with the signature street-food 'kothu' rhythm!\n6. Serve piping hot with extra salna and onion raita!",
+        "instructions_ta": "1. பெரிய தோசைக் கல்லில் எண்ணெய் ஊற்றி கருவேப்பிலை, வெங்காயம், பச்சை மிளகாய் வதக்கவும்.\n2. தக்காளி சேர்த்து 2 நிமிடம் வதக்கவும்.\n3. 2 முட்டைகளை உடைத்து ஊற்றி, உப்பு, மிளகுத்தூள் தூவி லேசாகக் கிளறவும்.\n4. பிய்த்த பரோட்டா துண்டுகள் மற்றும் சால்னாவை ஊற்றவும்.\n5. இரண்டு தோசை திருப்பியால் கொத்தி கொத்தி (கொத்து) நன்றாக கலந்து சுடச்சுட சால்னாவுடன் பரிமாறவும்!"
+    },
+    {
+        "id": "tn_d2",
+        "name_en": "Soft Wheat Chapati with Hotel Style Vegetable Kurma",
+        "name_ta": "சப்பாத்தி காய்கறி குருமா",
+        "category": "Dinner",
+        "diet": "Vegetarian",
+        "time_mins": 30,
+        "difficulty": "Easy",
+        "cleaned_ingredients_en": ["wheat flour", "carrot", "beans", "potato", "green pea", "onion", "tomato", "coconut", "fennel", "ginger", "garlic", "oil", "salt"],
+        "cleaned_ingredients_ta": ["கோதுமை மாவு", "கேரட்", "பீன்ஸ்", "உருளைக்கிழங்கு", "பட்டாணி", "வெங்காயம்", "தக்காளி", "தேங்காய்", "சோம்பு", "இஞ்சி", "பூண்டு", "எண்ணெய்", "உப்பு"],
+        "ingredients_en": "- 2 cups Whole Wheat Flour (for soft chapatis)\n- 1 cup mixed vegetables (Carrot, Beans, Potato, Green Peas)\n- 1 Onion & 1 Tomato\n- 1/2 cup grated Coconut ground with 1 tsp Fennel, 1 tbsp roasted gram, and 2 green chillies\n- Whole Spices (Cinnamon, Cardamom, Cloves)\n- Salt and Oil",
+        "ingredients_ta": "- 2 கப் கோதுமை மாவு\n- 1 கப் நறுக்கிய காய்கறிகள் (கேரட், பீன்ஸ், உருளைக்கிழங்கு, பட்டாணி)\n- 1 வெங்காயம், 1 தக்காளி\n- 1/2 கப் தேங்காய், சோம்பு, பொட்டுகடலை, பச்சை மிளகாய் விழுது\n- பட்டை, லவங்கம், ஏலக்காய், உப்பு, எண்ணெய்",
+        "instructions_en": "1. Knead soft chapati dough, rest 15 mins, roll into thin rotis, and cook on hot tawa with a touch of ghee till puffed and soft.\n2. For Kurma: Heat oil, crackle whole spices, sauté onions and tomatoes.\n3. Add vegetables, turmeric, salt, and 1 cup water; boil until vegetables are cooked.\n4. Pour in the ground coconut-fennel paste and simmer for 5 minutes until rich and aromatic.\n5. Serve soft chapatis with hot vegetable kurma!",
+        "instructions_ta": "1. கோதுமை மாவை மிருதுவாக பிசைந்து, தேய்த்து தோசைக் கல்லில் சுட்டு மென்மையான சப்பாத்தி தயார் செய்யவும்.\n2. குருமாவுக்கு: கடாயில் எண்ணெய் ஊற்றி பட்டை, லவங்கம் தாளித்து வெங்காயம், தக்காளி வதக்கவும்.\n3. காய்கறிகள், மஞ்சள்தூள், உப்பு, தண்ணீர் சேர்த்து காய்களை வேகவைக்கவும்.\n4. அரைத்த தேங்காய்-சோம்பு விழுதை ஊற்றி 5 நிமிடங்கள் கொதிக்கவிடவும்.\n5. சூடான மெத்து மெத்து சப்பாத்தியுடன் காய்கறி குருமாவை வைத்துப் பரிமாறவும்!"
+    },
+    {
+        "id": "tn_d3",
+        "name_en": "Spicy Street Style Muttai Dosa (Egg Dosa)",
+        "name_ta": "காரசாரமான முட்டை தோசை",
+        "category": "Dinner",
+        "diet": "Non-Vegetarian",
+        "time_mins": 15,
+        "difficulty": "Easy",
+        "cleaned_ingredients_en": ["dosa batter", "egg", "onion", "green chilli", "pepper", "curry leaf", "oil", "salt"],
+        "cleaned_ingredients_ta": ["தோசை மாவு", "முட்டை", "வெங்காயம்", "பச்சை மிளகாய்", "மிளகுத்தூள்", "கருவேப்பிலை", "எண்ணெய்", "உப்பு"],
+        "ingredients_en": "- 2 cups fermented Dosa Batter\n- 2 Eggs\n- 1 small Onion (finely chopped)\n- 1 Green Chilli (finely chopped)\n- 1/2 tsp Black Pepper Powder\n- 1 sprig Curry Leaves\n- Oil for cooking\n- Salt",
+        "ingredients_ta": "- 2 கப் தோசை மாவு\n- 2 முட்டை\n- 1 பொடியாக நறுக்கிய வெங்காயம்\n- 1 பச்சை மிளகாய்\n- 1/2 தேக்கரண்டி மிளகுத்தூள்\n- கருவேப்பிலை, எண்ணெய், உப்பு",
+        "instructions_en": "1. Heat a tawa, pour a ladle of dosa batter and spread into a medium thick dosa.\n2. Crack an egg directly onto the center of the dosa.\n3. Sprinkle chopped onions, green chillies, curry leaves, salt, and crushed black pepper over the egg.\n4. Gently spread the egg across the surface with a spatula; drizzle oil along edges.\n5. Flip and cook for 1-2 minutes until egg is thoroughly cooked and crispy. Serve hot with spicy salna or kara chutney!",
+        "instructions_ta": "1. தோசைக் கல்லை சூடாக்கி, மாவை ஊற்றி சற்று கனமான தோசையாக வார்க்கவும்.\n2. நடுவில் ஒரு முட்டையை உடைத்து ஊற்றவும்.\n3. மேலே நறுக்கிய வெங்காயம், பச்சை மிளகாய், கருவேப்பிலை, உப்பு, மிளகுத்தூள் தூவவும்.\n4. கரண்டியால் முட்டையை தோசை முழுவதும் பரப்பி, ஓரங்களில் எண்ணெய் ஊற்றவும்.\n5. திருப்பிப் போட்டு முட்டை நன்றாக வேகும் வரை சிவக்கவிட்டு கார சட்னியுடன் சுடச்சுட பரிமாறவும்!"
+    },
+    {
+        "id": "tn_l11",
+        "name_en": "Traditional Tamil Mor Kuzhambu (Spiced Curd Curry)",
+        "name_ta": "பாரம்பரிய மோர் குழம்பு",
+        "category": "Lunch",
+        "diet": "Vegetarian",
+        "time_mins": 20,
+        "difficulty": "Easy",
+        "cleaned_ingredients_en": [
+            "curd", "coconut", "green chilli", "cumin", "toor dal",
+            "ginger", "turmeric", "mustard", "curry leaf", "asafoetida", "salt"
+        ],
+        "cleaned_ingredients_ta": [
+            "தயிர்", "தேங்காய்", "பச்சை மிளகாய்", "சீரகம்", "துவரம் பருப்பு",
+            "இஞ்சி", "மஞ்சள்தூள்", "கடுகு", "கருவேப்பிலை", "பெருங்காயம்", "உப்பு"
+        ],
+        "ingredients_en": "- 2 cups beaten fresh Curd or Buttermilk\n- 1/4 cup grated Coconut\n- 2 Green Chillies, 1/2 inch Ginger\n- 1 tsp Cumin Seeds, 1 tsp Toor Dal (soaked)\n- 1/2 tsp Turmeric, Mustard seeds, Curry leaves, Asafoetida & Salt",
+        "ingredients_ta": "- 2 கப் சிலிப்பிய கெட்டி தயிர் / மோர்\n- 1/4 கப் துருவிய தேங்காய்\n- 2 பச்சை மிளகாய், சிறிய துண்டு இஞ்சி\n- 1 ஸ்பூன் சீரகம், 1 ஸ்பூன் ஊறவைத்த துவரம் பருப்பு\n- மஞ்சள் தூள், கடுகு, கருவேப்பிலை, பெருங்காயம் மற்றும் உப்பு",
+        "instructions_en": "1. Grind grated coconut, soaked toor dal, cumin, green chillies, and ginger into a smooth fragrant paste.\n2. In a vessel, whisk curd with turmeric, salt, ground paste, and a splash of water over low flame. Warm gently until hot—do not allow it to boil.\n3. Heat 1 tsp oil, temper mustard seeds, curry leaves, and asafoetida. Pour over the hot mor kuzhambu.\n4. Serve hot with steamed white rice, appalam, and potato roast!",
+        "instructions_ta": "1. ஊறவைத்த துவரம் பருப்பு, தேங்காய், பச்சை மிளகாய், சீரகம், இஞ்சி ஆகியவற்றை விழுதாக அரைத்துக் கொள்ளவும்.\n2. ஒரு பாத்திரத்தில் தயிர், மஞ்சள் தூள், உப்பு மற்றும் அரைத்த விழுதைச் சேர்த்து மிதமான தீயில் சூடாக்கவும் (கொதிக்க விடக்கூடாது).\n3. தாளிப்பு கரண்டியில் எண்ணெய் விட்டு கடுகு, கருவேப்பிலை, பெருங்காயம் தாளித்து குழம்பில் ஊற்றவும்.\n4. சூடான சாதம், அப்பளம் மற்றும் உருளைக்கிழங்கு வறுவலுடன் பரிமாறவும்!"
+    },
+    {
+        "id": "tn_s4",
+        "name_en": "South Indian Hotel Style Thayir Vadai (Curd Vada)",
+        "name_ta": "ஹோட்டல் சுவை தயிர் வடை",
+        "category": "Snacks",
+        "diet": "Vegetarian",
+        "time_mins": 25,
+        "difficulty": "Medium",
+        "cleaned_ingredients_en": [
+            "urad dal", "curd", "green chilli", "ginger", "mustard",
+            "curry leaf", "coriander", "carrot", "asafoetida", "oil", "salt"
+        ],
+        "cleaned_ingredients_ta": [
+            "உளுத்தம் பருப்பு", "தயிர்", "பச்சை மிளகாய்", "இஞ்சி", "கடுகு",
+            "கருவேப்பிலை", "கொத்தமல்லி", "கேரட்", "பெருங்காயம்", "எண்ணெய்", "உப்பு"
+        ],
+        "ingredients_en": "- 1 cup Urad Dal (soaked 2 hrs & ground fluffy)\n- 2 cups thick fresh Curd (whisked smooth)\n- 2 Green Chillies & 1/2 inch Ginger (finely chopped)\n- 1 tsp Mustard seeds, Curry leaves, Asafoetida\n- Grated Carrot, Coriander leaves & Salt\n- Oil for deep frying",
+        "ingredients_ta": "- 1 கப் உளுத்தம் பருப்பு (ஊறவைத்து அரைத்தது)\n- 2 கப் கெட்டித் தயிர் (நன்றாக சிலிப்பியது)\n- 2 பச்சை மிளகாய், நறுக்கிய இஞ்சி\n- கடுகு, கருவேப்பிலை, பெருங்காயம்\n- துருவிய கேரட், கொத்தமல்லி தழை, உப்பு\n- பொரிக்க எண்ணெய்",
+        "instructions_en": "1. Grind soaked urad dal with a pinch of salt until fluffy; shape into medu vadas and deep fry until crispy and golden.\n2. Immerse fried hot vadas in warm salted water for 2 minutes, then gently press between palms to squeeze excess water.\n3. Whisk chilled thick curd with salt, minced ginger, and green chillies. Place squeezed vadas in a bowl and pour curd generously until fully soaked.\n4. Temper mustard seeds and curry leaves in oil and pour over the vadas. Garnish with grated carrot, boondi, and coriander. Serve cool!",
+        "instructions_ta": "1. ஊறவைத்த உளுந்தை மாவாக அரைத்து, சூடான எண்ணெயில் மெதுவடையாக சுட்டு எடுக்கவும்.\n2. வடைகளை வெதுவெதுப்பான நீரில் 2 நிமிடம் போட்டு மெதுவாக பிழிந்து எடுக்கவும்.\n3. சிலிப்பிய கெட்டித் தயிரில் உப்பு, நறுக்கிய பச்சை மிளகாய், இஞ்சி சேர்த்து வடைகளின் மீது தாராளமாக ஊற்றவும்.\n4. கடுகு, கருவேப்பிலை தாளித்து, மேலே துருவிய கேரட் மற்றும் கொத்தமல்லி தூவி குளிர்ந்து பரிமாறவும்!"
+    },
+    {
+        "id": "tn_b10",
+        "name_en": "Instant Soft Mor Dosa (Curd / Buttermilk Dosa)",
+        "name_ta": "சுவையான மோர் தோசை (தயிர் தோசை)",
+        "category": "Breakfast",
+        "diet": "Vegetarian",
+        "time_mins": 15,
+        "difficulty": "Easy",
+        "cleaned_ingredients_en": [
+            "raw rice", "rava", "curd", "green chilli", "ginger",
+            "cumin", "curry leaf", "coriander", "salt", "oil"
+        ],
+        "cleaned_ingredients_ta": [
+            "பச்சரிசி", "ரவை", "தயிர்", "பச்சை மிளகாய்", "இஞ்சி",
+            "சீரகம்", "கருவேப்பிலை", "கொத்தமல்லி", "உப்பு", "எண்ணெய்"
+        ],
+        "ingredients_en": "- 1 cup Raw Rice flour or Sooji Rava\n- 1 cup fresh sour Curd or thick Buttermilk\n- 1 Green Chilli & 1/2 inch Ginger (finely chopped)\n- 1 tsp Cumin Seeds, Curry leaves, Coriander\n- Salt to taste & Oil for cooking",
+        "ingredients_ta": "- 1 கப் பச்சரிசி மாவு அல்லது ரவை\n- 1 கப் புளித்த கெட்டித் தயிர் அல்லது மோர்\n- பச்சை மிளகாய், நறுக்கிய இஞ்சி\n- 1 ஸ்பூன் சீரகம், கருவேப்பிலை, கொத்தமல்லி\n- தேவையான அளவு உப்பு மற்றும் எண்ணெய்",
+        "instructions_en": "1. In a mixing bowl, mix rice flour/rava with sour curd, water, salt, cumin seeds, green chillies, ginger, and curry leaves to dosa batter consistency.\n2. Heat a tawa on medium heat. Pour a ladle of batter, do not spread too thin, and drizzle oil around the edges.\n3. Cover with a lid and cook for 2 minutes until spongy holes appear and base is golden.\n4. Flip and cook for 30 seconds. Serve hot with spicy coconut chutney or tomato chutney!",
+        "instructions_ta": "1. ஒரு பாத்திரத்தில் அரிசி மாவு/ரவை, தயிர், தண்ணீர், சீரகம், பச்சை மிளகாய், இஞ்சி, கருவேப்பிலை, உப்பு சேர்த்து தோசை மாவு பதத்திற்கு கலக்கவும்.\n2. சூடான தோசைக் கல்லில் ஒரு கரண்டி மாவை ஊற்றி லேசாக பரப்பி, எண்ணெய் விடவும்.\n3. மூடி போட்டு மிதமான தீயில் வேக வைத்து, பொன்னிறமானதும் திருப்பிப் போடவும்.\n4. சுவையான பஞ்சு போன்ற மோர் தோசையை காரசாரமான சட்னியுடன் பரிமாறவும்!"
+    },
+    {
+        "id": "tn_d4",
+        "name_en": "Traditional Thayir Semiya (Curd Vermicelli)",
+        "name_ta": "சுவையான தயிர் சேமியா",
+        "category": "Dinner",
+        "diet": "Vegetarian",
+        "time_mins": 15,
+        "difficulty": "Easy",
+        "cleaned_ingredients_en": [
+            "semiya", "curd", "milk", "mustard", "green chilli",
+            "ginger", "curry leaf", "coriander", "carrot", "asafoetida", "salt"
+        ],
+        "cleaned_ingredients_ta": [
+            "சேமியா", "தயிர்", "பால்", "கடுகு", "பச்சை மிளகாய்",
+            "இஞ்சி", "கருவேப்பிலை", "கொத்தமல்லி", "கேரட்", "பெருங்காயம்", "உப்பு"
+        ],
+        "ingredients_en": "- 1 cup roasted Vermicelli (Semiya)\n- 1 cup fresh thick Curd & 1/4 cup Milk\n- 1 tsp Mustard Seeds, 1 Green Chilli, Ginger\n- Curry leaves, Asafoetida & Salt\n- Grated Carrot, Pomegranate & Coriander",
+        "ingredients_ta": "- 1 கப் வறுத்த சேமியா\n- 1 கப் கெட்டித் தயிர், 1/4 கப் பால்\n- கடுகு, பச்சை மிளகாய், நறுக்கிய இஞ்சி\n- கருவேப்பிலை, பெருங்காயம், உப்பு\n- துருவிய கேரட், மாதுளை, கொத்தமல்லி",
+        "instructions_en": "1. Boil vermicelli in water with a pinch of salt until cooked soft (3-4 mins), drain water completely and let it cool.\n2. In a bowl, whisk fresh curd, milk, and salt. Mix gently with cooled vermicelli.\n3. Heat oil, temper mustard seeds, green chilli, ginger, curry leaves, and asafoetida. Pour over the curd semiya.\n4. Garnish with grated carrot and coriander. Serve chilled as a soothing, wholesome dinner!",
+        "instructions_ta": "1. சேமியாவை கொதிக்கும் நீரில் வேக வைத்து, தண்ணீரை வடித்து நன்றாக ஆற வைக்கவும்.\n2. ஒரு பாத்திரத்தில் தயிர், பால், உப்பு சேர்த்து கலந்து, ஆறிய சேமியாவைச் சேர்க்கவும்.\n3. தாளிக்கும் கரண்டியில் எண்ணெய் விட்டு கடுகு, பச்சை மிளகாய், இஞ்சி, கருவேப்பிலை, பெருங்காயம் தாளித்து கொட்டவும்.\n4. துருவிய கேரட், கொத்தமல்லி தூவி குளிர்ந்து பரிமாறவும். அருமையான இரவு உணவு தயார்!"
+    }
+]
+
+
+def create_dataset():
+    os.makedirs(DATA_DIR, exist_ok=True)
+    with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
+        json.dump(RECIPES, f, ensure_ascii=False, indent=2)
+    print(f"Bilingual Tamil Nadu Recipes dataset created successfully with {len(RECIPES)} recipes!")
+    print(f"Saved to: {OUTPUT_PATH}")
+
+
+if __name__ == "__main__":
+    create_dataset()
